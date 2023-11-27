@@ -1,8 +1,3 @@
-mod cores;
-
-// mod bin;
-use bi;
-
-async fn main() {
+fn main() {
     println!("Hello, world!");
 }
