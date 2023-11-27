@@ -4,6 +4,7 @@ use actix_web::{
     error::{InternalError, JsonPayloadError},
     web, App, HttpRequest, HttpResponse, HttpServer,
 };
+use cores::{errors::base_error::BaseError, helpers::map_to_not_found_body_response};
 use dotenv::dotenv;
 use sqlx::PgPool;
 use tracing::{debug, error};
@@ -33,10 +34,13 @@ async fn main() -> io::Result<()> {
     let server_port = app_state.clone().config.server_port;
 
     let app = move || {
-        App::new()
-            .app_data(app_state.clone())
-            .app_data(web::JsonConfig::default().error_handler(json_error_handler))
-            .configure(config)
+        {
+            App::new()
+                .app_data(app_state.clone())
+                .app_data(web::JsonConfig::default().error_handler(json_error_handler))
+                .configure(config)
+        }
+        .default_service(web::route().to(not_found))
     };
 
     debug!("Starting Serve on port: {}", server_port);
@@ -46,6 +50,10 @@ async fn main() -> io::Result<()> {
 
 fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(web::resource("/health").route(web::get().to(HttpResponse::Ok)));
+}
+
+async fn not_found() -> Result<HttpResponse, BaseError> {
+    Ok(map_to_not_found_body_response("Route was not found".into()))
 }
 
 pub fn json_error_handler(err: JsonPayloadError, _: &HttpRequest) -> actix_web::Error {

@@ -16,3 +16,19 @@ pub fn map_to_bad_body_response(msg: String) -> HttpResponse {
             "status": 401,
     }))
 }
+
+pub fn map_to_not_found_body_response(msg: String) -> HttpResponse {
+    let binding = msg.replace("Json deserialize error:", "");
+    let mut msg = binding.as_str();
+
+    if msg.contains("at line") {
+        let line_at_index = msg.find("at line").unwrap_or(msg.len());
+        msg = &msg[..line_at_index];
+    }
+
+    HttpResponse::NotFound().json(json!({
+            "state": "error",
+            "message": msg.trim(),
+            "status": 404,
+    }))
+}
