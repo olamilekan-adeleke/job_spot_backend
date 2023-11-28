@@ -2,7 +2,7 @@ use actix_web::HttpResponse;
 use serde::Serialize;
 use serde_json::json;
 
-pub fn map_to_response_with_token<T: Serialize>(data: &T, msg: &str, token: &str) -> HttpResponse {
+pub fn map_response_with_token<T: Serialize>(data: &T, msg: &str, token: &str) -> HttpResponse {
     HttpResponse::Ok().json(json!({
             "status": "success",
             "message": msg,

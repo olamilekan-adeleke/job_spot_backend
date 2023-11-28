@@ -2,7 +2,7 @@ use actix_web::{web, HttpResponse};
 use validator::Validate;
 
 use crate::{
-    cores::{map_to_response_with_token, AppState, BaseError},
+    cores::{map_response_with_token, AppState, BaseError},
     feature::{
         db_access::check_username_exist_db,
         db_access::create_new_user_db,
@@ -36,7 +36,7 @@ pub async fn sign_up_handler(
     )?;
     tracing::info!("Generated JWT token for user");
 
-    Ok(map_to_response_with_token(
+    Ok(map_response_with_token(
         &user,
         "Account Created Successfully",
         &access_token,
