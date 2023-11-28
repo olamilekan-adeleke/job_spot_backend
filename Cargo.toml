@@ -15,7 +15,7 @@ actix-web = "4.4.0"
 dotenv = "0.15.0"
 
 #Postgres access library
-sqlx = {version = "0.7.3", default_features = false, features = ["postgres","runtime-tokio-native-tls", "macros","chrono"]}
+sqlx = {version = "0.7.3", default_features = false, features = ["postgres","runtime-tokio-native-tls", "macros","chrono", "uuid"]}
 
 # Data serialization library
 serde = { version = "1.0.193", features = ["derive"] }

@@ -2,18 +2,22 @@ use std::io;
 
 use actix_web::{
     error::{InternalError, JsonPayloadError},
-    web, App, HttpRequest, HttpResponse, HttpServer,
+    web::{self, Data},
+    App, HttpRequest, HttpResponse, HttpServer,
 };
 use cores::*;
 use dotenv::dotenv;
 use sqlx::PgPool;
 use tracing::{debug, error};
 
-use crate::cores::states::{AppState, EnvConfig};
+use crate::{
+    cores::states::{AppState, EnvConfig},
+    feature::routes::auth_routes,
+};
 
 #[path = "../cores/mod.rs"]
 mod cores;
-#[path ="../features/mod.rs"]
+#[path = "../features/mod.rs"]
 mod feature;
 
 #[actix_rt::main]
@@ -30,7 +34,7 @@ async fn main() -> io::Result<()> {
     let db_pool = PgPool::connect(&env_config.database_url).await.unwrap();
     let app_state: AppState = AppState {
         db: db_pool,
-        config: env_config,
+        config: env_config.clone(),
     };
 
     let server_port = app_state.clone().config.server_port;
@@ -38,9 +42,10 @@ async fn main() -> io::Result<()> {
     let app = move || {
         {
             App::new()
-                .app_data(app_state.clone())
+                .app_data(Data::new(app_state.clone()))
                 .app_data(web::JsonConfig::default().error_handler(json_error_handler))
                 .configure(config)
+                .configure(auth_routes)
         }
         .default_service(web::route().to(not_found))
     };
@@ -59,7 +64,8 @@ async fn not_found() -> Result<HttpResponse, BaseError> {
 }
 
 pub fn json_error_handler(err: JsonPayloadError, _: &HttpRequest) -> actix_web::Error {
-    let err_msg = format!("Json Body Error:: {}", err);
+    let err_msg = format!("Json Body Error: {}", err);
     error!(err_msg);
-    InternalError::from_response("", cores::helpers::map_to_bad_body_response(err_msg)).into()
+
+    InternalError::from_response("", map_to_bad_body_response(err.to_string())).into()
 }

@@ -1,5 +1,15 @@
 use actix_web::HttpResponse;
+use serde::Serialize;
 use serde_json::json;
+
+pub fn map_to_response_with_token<T: Serialize>(data: &T, msg: &str, token: &str) -> HttpResponse {
+    HttpResponse::Ok().json(json!({
+            "status": "success",
+            "message": msg,
+            "token": token,
+            "data": data
+    }))
+}
 
 pub fn map_to_bad_body_response(msg: String) -> HttpResponse {
     let binding = msg.replace("Json deserialize error:", "");

@@ -1,7 +1,6 @@
-use chrono::{DateTime, Utc};
 use serde::Serialize;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct UserDetails {
     pub user_id: uuid::Uuid,
     pub full_name: String,
@@ -14,6 +13,6 @@ pub struct UserDetails {
     pub user_location: Option<String>,
     pub date_of_birth: Option<String>,
     pub gender: Option<String>,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
 }
