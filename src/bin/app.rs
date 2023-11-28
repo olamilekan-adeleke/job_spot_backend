@@ -13,6 +13,8 @@ use crate::cores::states::{AppState, EnvConfig};
 
 #[path = "../cores/mod.rs"]
 mod cores;
+#[path ="../features/mod.rs"]
+mod feature;
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
