@@ -5,7 +5,7 @@ use crate::{
     cores::{map_response_with_token, AppState, BaseError},
     feature::{
         db_access::check_username_exist_db,
-        db_access::create_new_user_db,
+        db_access::{check_phone_exist_db, create_new_user_db},
         models::{create_user_data::CreateUser, password_helper::PasswordHelper, JwtHelper},
     },
 };
@@ -23,6 +23,9 @@ pub async fn sign_up_handler(
 
     check_username_exist_db(&app_state.db, &user_data.username).await?;
     tracing::info!("Username was found to be unique");
+
+    check_phone_exist_db(&app_state.db, &user_data.phone_number).await?;
+    tracing::info!("Phone number was found to be unique");
 
     let user_data_with_hashed_password = PasswordHelper::hash_password(user_data.into())?;
 
