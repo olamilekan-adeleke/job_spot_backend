@@ -8,8 +8,10 @@ pub struct CreateUser {
     pub email: String,
     #[validate(length(min = 3, message = "Must be above 3 char "))]
     pub full_name: String,
-    #[validate(length(min = 2, max = 30, message = "Must be between 8 to 30 char "))]
+    #[validate(length(min = 2, max = 30, message = "Must be between 2 to 30 char "))]
     pub username: String,
+    #[validate(length(min = 8, max = 11, message = "Must be between 8 to 11 char "))]
+    pub phone_number: String,
     #[validate(length(min = 8, max = 50, message = "Must be between 8 to 50 char "))]
     pub password: String,
 }
@@ -21,6 +23,7 @@ impl From<web::Json<CreateUser>> for CreateUser {
             full_name: value.full_name.clone(),
             username: value.username.clone(),
             password: value.password.clone(),
+            phone_number: value.phone_number.clone(),
         }
     }
 }

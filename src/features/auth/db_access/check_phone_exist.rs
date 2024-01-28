@@ -11,11 +11,12 @@ pub async fn check_phone_exist_db(pool: &PgPool, phone: &str) -> Result<(), Base
     .fetch_optional(pool)
     .await?;
 
-    if user.is_some() {
-        let msg = format!("phone '{}' already belong to another user", phone);
-        tracing::error!(msg);
-        Err(BaseError::InvalidBody(msg))
-    } else {
-        Ok(())
+    if user.is_none() {
+        return Ok(());
     }
+
+    let msg = format!("phone '{}' already belong to another user", phone);
+    tracing::error!(msg);
+
+    Err(BaseError::InvalidBody(msg))
 }
