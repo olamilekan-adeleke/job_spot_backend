@@ -22,3 +22,4 @@ ALTER COLUMN
     updated_at
 SET
     DEFAULT NOW();
+
