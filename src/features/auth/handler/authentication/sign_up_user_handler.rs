@@ -4,9 +4,9 @@ use validator::Validate;
 use crate::{
     cores::{map_response_with_token, AppState, BaseError},
     feature::{
-        db_access::check_username_exist_db,
-        db_access::{check_phone_exist_db, create_new_user_db},
-        models::{create_user_data::CreateUser, password_helper::PasswordHelper, JwtHelper},
+        db_access::{check_phone_exist_db, check_username_exist_db, create_new_user_db},
+        middleware::password_hasher::password_hasher::PasswordHelper,
+        models::{create_user_data::CreateUser, JwtHelper},
     },
 };
 
