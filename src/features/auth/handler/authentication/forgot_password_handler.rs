@@ -2,7 +2,7 @@ use actix_web::{web, HttpResponse};
 use chrono::NaiveDateTime;
 
 use crate::feature::db_access::get_user_record_db;
-use crate::feature::db_access::save_forgot_password_code::save_forgot_pasword_code;
+use crate::feature::db_access::save_forgot_password_code_db::save_forgot_pasword_code;
 use crate::feature::helpers::code_generator::CodeGenerator;
 use crate::feature::models::VerificationData;
 use crate::map_response;
@@ -28,6 +28,10 @@ pub async fn forgot_password_handler(
     };
 
     let code_data = save_forgot_pasword_code(&app_state.db, verification_data).await?;
+    tracing::info!("Saved Verification code to DB");
+
+    // TODO: Send email to user
+
     Ok(map_response(
         &code_data,
         format!(
