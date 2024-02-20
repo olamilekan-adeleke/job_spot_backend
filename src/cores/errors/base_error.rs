@@ -4,6 +4,7 @@ use sqlx::error::Error as SQLxError;
 use std::fmt::Display;
 
 #[derive(Debug, Serialize)]
+#[allow(dead_code)]
 pub enum BaseError {
     DBError(String),
     ActixServerError(String),

@@ -11,6 +11,10 @@ pub fn map_response_with_token<T: Serialize>(data: &T, msg: &str, token: &str) -
     }))
 }
 
+pub fn map_response<T: Serialize>(data: &T, msg: &str) -> HttpResponse {
+    HttpResponse::Ok().json(json!({ "status": "success", "message": msg, "data": data }))
+}
+
 pub fn map_to_bad_body_response(msg: String) -> HttpResponse {
     let binding = msg.replace("Json deserialize error:", "");
     let mut msg = binding.as_str();
