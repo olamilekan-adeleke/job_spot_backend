@@ -18,7 +18,7 @@ pub async fn forgot_password_handler(
     let code = CodeGenerator::generate_random_code(6).unwrap();
     tracing::info!("{:?}", format!("Generated code:: {:?}", code));
 
-    let user_data = get_user_record_db(&app_state.db, &email).await?;
+    let user_data = get_user_record_db(&app_state.db, email).await?;
 
     let mins_as_seconds = 60 * 20;
     let verification_data = VerificationData {
