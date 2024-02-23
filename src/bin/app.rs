@@ -12,7 +12,7 @@ use tracing::{debug, error};
 
 use crate::{
     cores::states::{AppState, EnvConfig},
-    feature::routes::auth_routes,
+    feature::{company::routes::company_route, routes::auth_routes},
 };
 
 #[path = "../cores/mod.rs"]
@@ -45,9 +45,13 @@ async fn main() -> io::Result<()> {
                 .app_data(Data::new(app_state.clone()))
                 .app_data(web::JsonConfig::default().error_handler(json_error_handler))
                 .configure(config)
-                .configure(auth_routes)
+                .service(
+                    web::scope("/v1")
+                        .configure(auth_routes)
+                        .configure(company_route),
+                )
+                .default_service(web::route().to(not_found))
         }
-        .default_service(web::route().to(not_found))
     };
 
     debug!("Starting Serve on port: {}", server_port);
@@ -59,8 +63,10 @@ fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(web::resource("/health").route(web::get().to(HttpResponse::Ok)));
 }
 
-async fn not_found() -> Result<HttpResponse, BaseError> {
-    Ok(map_to_not_found_body_response("Route was not found".into()))
+async fn not_found(req: HttpRequest) -> Result<HttpResponse, BaseError> {
+    let path = req.path().to_string();
+    let msg = format!("The Route '{}' was not found", path);
+    Ok(map_to_not_found_body_response(msg))
 }
 
 pub fn json_error_handler(err: JsonPayloadError, _: &HttpRequest) -> actix_web::Error {
