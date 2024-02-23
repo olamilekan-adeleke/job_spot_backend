@@ -8,15 +8,13 @@ use super::handler::authentication::{
 
 pub fn auth_routes(config: &mut web::ServiceConfig) {
     config.service(
-        web::scope("/v1").service(
-            web::scope("/auth")
-                .route("/login", web::post().to(login_handler))
-                .route("/sign-up", web::post().to(sign_up_handler))
-                .route("/forgot-password", web::post().to(forgot_password_handler))
-                .route(
-                    "/reset-password",
-                    web::post().to(verify_reset_password_handler),
-                ),
-        ),
+        web::scope("/auth")
+            .route("/login", web::post().to(login_handler))
+            .route("/sign-up", web::post().to(sign_up_handler))
+            .route("/forgot-password", web::post().to(forgot_password_handler))
+            .route(
+                "/reset-password",
+                web::post().to(verify_reset_password_handler),
+            ),
     );
 }

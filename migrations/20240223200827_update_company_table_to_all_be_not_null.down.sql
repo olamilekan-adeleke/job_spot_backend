@@ -1,0 +1,15 @@
+-- Add down migration script here
+ALTER TABLE companies
+ALTER COLUMN company_image_url DROP NOT NULL,
+ALTER COLUMN company_name DROP NOT NULL,
+ALTER COLUMN category DROP NOT NULL,
+ALTER COLUMN location DROP NOT NULL,
+ALTER COLUMN year_created DROP NOT NULL,
+ALTER COLUMN social_link DROP NOT NULL,
+ALTER COLUMN website_link DROP NOT NULL,
+ALTER COLUMN about DROP NOT NULL,
+ALTER COLUMN industry DROP NOT NULL,
+ALTER COLUMN employee_size DROP NOT NULL,
+ALTER COLUMN heads_office_address DROP NOT NULL,
+ALTER COLUMN specialization DROP NOT NULL;
+
