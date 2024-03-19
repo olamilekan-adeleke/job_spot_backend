@@ -12,7 +12,10 @@ use tracing::{debug, error};
 
 use crate::{
     cores::states::{AppState, EnvConfig},
-    feature::{company::routes::company_route, routes::auth_routes},
+    feature::{
+        company::routes::company_route, jobs_posting::routea::job_posting_routes,
+        routes::auth_routes,
+    },
 };
 
 #[path = "../cores/mod.rs"]
@@ -48,7 +51,8 @@ async fn main() -> io::Result<()> {
                 .service(
                     web::scope("/v1")
                         .configure(auth_routes)
-                        .configure(company_route),
+                        .configure(company_route)
+                        .configure(job_posting_routes),
                 )
                 .default_service(web::route().to(not_found))
         }
