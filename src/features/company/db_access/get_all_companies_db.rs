@@ -2,6 +2,8 @@ use sqlx::PgPool;
 
 use crate::{feature::company::models::company::Company, BaseError};
 
+// const QUERY: &str = "SELECT * FROM companies ORDER BY company_name LIMIT $1";
+
 pub async fn get_all_companies(
     pool: &PgPool,
     page_size: i64,

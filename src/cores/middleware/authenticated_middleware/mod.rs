@@ -51,13 +51,12 @@ where
 
     fn call(&self, req: ServiceRequest) -> Self::Future {
         let srv = self.service.clone();
-        println!("Hi from start. You requested: {}", req.path());
+        println!("You requested: {}", req.path());
 
         Box::pin(async move {
             let token_claims = validate_token(&req)?;
             req.extensions_mut().insert(token_claims);
 
-            println!("Hi from response");
             let res = srv.call(req).await?;
             Ok(res)
         })
