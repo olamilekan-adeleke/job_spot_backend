@@ -60,6 +60,7 @@ async fn main() -> io::Result<()> {
 
     debug!("Starting Serve on port: {}", server_port);
     let server_url = format!("127.0.0.1:{}", server_port);
+
     HttpServer::new(app).bind(server_url)?.run().await
 }
 
