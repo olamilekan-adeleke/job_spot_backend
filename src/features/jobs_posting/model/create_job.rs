@@ -12,7 +12,7 @@ pub struct CreateJob {
     pub company_id: String,
     #[validate(length(min = 1), custom = "validate_jobtype")]
     pub job_type: String,
-    pub salary: u64,
+    pub salary: i64,
     pub currency: String,
 }
 
