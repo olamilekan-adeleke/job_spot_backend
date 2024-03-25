@@ -7,7 +7,7 @@ use crate::{
     feature::jobs_posting::{
         db_access::{
             create_job_posting_db_access::create_job_posting_db_access,
-            get_job_posting_by_id::get_job_posting_by_id,
+            get_job_postings::get_job_posting_by_id_db_access::*,
         },
         model::create_job::CreateJob,
     },
@@ -24,7 +24,7 @@ pub async fn create_job_posting_handler(
     let job_id = create_job_posting_db_access(&app_state.db, &job_data).await?;
     tracing::info!("Added Job Posting To DB..");
 
-    let job_posting = get_job_posting_by_id(&app_state.db, &job_id).await?;
+    let job_posting = get_job_posting_by_id_db_access(&app_state.db, &job_id).await?;
     tracing::info!("Fetched Job Posting .....");
 
     let msg = "Create Job Posting Success";
