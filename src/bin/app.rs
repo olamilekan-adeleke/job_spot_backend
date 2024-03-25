@@ -13,7 +13,7 @@ use tracing::{debug, error};
 use crate::{
     cores::states::{AppState, EnvConfig},
     feature::{
-        company::routes::company_route, jobs_posting::routea::job_posting_routes,
+        company::routes::company_route, jobs_posting::route::job_posting_routes,
         routes::auth_routes,
     },
 };
