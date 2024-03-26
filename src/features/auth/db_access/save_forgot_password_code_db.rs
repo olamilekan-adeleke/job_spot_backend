@@ -27,7 +27,7 @@ pub async fn save_forgot_pasword_code(
             data.code, 
             data.expiration_date,
         ).fetch_one(pool).await?;
-    }
+    };
 
     Ok(code_data)
 }

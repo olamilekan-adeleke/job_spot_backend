@@ -1,5 +1,3 @@
-// use actix_web::{web, HttpResponse};
-
 use actix_web::{web, HttpResponse};
 
 use crate::{

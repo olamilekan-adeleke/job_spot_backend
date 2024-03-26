@@ -3,11 +3,13 @@ use actix_web::web;
 use crate::authenticated_middleware::Autheticated;
 
 use super::handlers::{
-    create_job_posting_handler::create_job_posting_handler,
+    create_job::create_job_posting_handler::create_job_posting_handler,
     get_job_locations_handler::get_job_locations,
     get_job_position_handler::get_job_posistion_handler,
-    get_job_posting_by_id_handler::get_job_posting_by_id_handler,
-    get_job_postings_handler::get_job_postings_handler,
+    get_jobs::{
+        get_job_posting_by_id_handler::get_job_posting_by_id_handler,
+        get_job_postings_handler::get_job_postings_handler,
+    },
 };
 
 pub fn job_posting_routes(config: &mut web::ServiceConfig) {
