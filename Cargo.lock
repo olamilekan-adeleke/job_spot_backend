@@ -1170,6 +1170,7 @@ dependencies = [
  "futures-util",
  "jwt-simple",
  "openssl",
+ "rand",
  "serde",
  "serde_json",
  "sqlx",

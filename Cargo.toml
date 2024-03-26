@@ -50,3 +50,5 @@ tracing-subscriber = { version = "0.3.18", features = [
     'json',
     'tracing-log',
 ] }
+
+rand = "0.8.5"

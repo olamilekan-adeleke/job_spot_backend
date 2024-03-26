@@ -11,11 +11,11 @@ pub async fn check_username_exist_db(pool: &PgPool, username: &str) -> Result<()
     .fetch_optional(pool)
     .await?;
 
-    if user.is_some() {
-        let msg = format!("Username '{}' already exist in our records", username);
-        tracing::error!(msg);
-        Err(BaseError::InvalidBody(msg))
-    } else {
-        Ok(())
+    if user.is_none() {
+        return Ok(());
     }
+
+    let msg = format!("Username '{}' already exist in our records", username);
+    tracing::error!(msg);
+    Err(BaseError::InvalidBody(msg))
 }

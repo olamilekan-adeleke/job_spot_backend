@@ -4,7 +4,8 @@ use crate::{
     cores::{map_response_with_token, AppState, BaseError},
     feature::{
         db_access::get_user_record_db,
-        models::{password_helper::PasswordHelper, user::login_data::LoginData, JwtHelper},
+        middleware::password_hasher::password_hasher::PasswordHelper,
+        models::{user::login_data::LoginData, JwtHelper},
     },
 };
 

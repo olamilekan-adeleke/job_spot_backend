@@ -4,16 +4,16 @@ use validator::Validate;
 use crate::{
     cores::{map_response_with_token, AppState, BaseError},
     feature::{
-        db_access::check_username_exist_db,
-        db_access::{check_phone_exist_db, create_new_user_db},
-        models::{create_user_data::CreateUser, password_helper::PasswordHelper, JwtHelper},
+        db_access::{check_phone_exist_db, check_username_exist_db, create_new_user_db},
+        middleware::password_hasher::password_hasher::PasswordHelper,
+        models::{create_user_data::CreateUser, JwtHelper},
     },
 };
 
 #[tracing::instrument(name = "Creating Account for new user" skip(app_state))]
 pub async fn sign_up_handler(
     app_state: web::Data<AppState>,
-    user_data: web::Json<CreateUser>,
+    mut user_data: web::Json<CreateUser>,
 ) -> Result<HttpResponse, BaseError> {
     // Validate Form
     user_data
@@ -27,9 +27,10 @@ pub async fn sign_up_handler(
     check_phone_exist_db(&app_state.db, &user_data.phone_number).await?;
     tracing::info!("Phone number was found to be unique");
 
-    let user_data_with_hashed_password = PasswordHelper::hash_password(user_data.into())?;
+    let hashed_password = PasswordHelper::hash_password(&user_data.password.to_owned())?;
+    user_data.password = hashed_password;
 
-    let user = create_new_user_db(&app_state.db, &user_data_with_hashed_password).await?;
+    let user = create_new_user_db(&app_state.db, &user_data).await?;
     tracing::info!("User Account was successfully added to DB");
 
     let access_token = JwtHelper::generate_jwt(

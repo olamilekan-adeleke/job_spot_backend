@@ -20,3 +20,14 @@ pub async fn check_phone_exist_db(pool: &PgPool, phone: &str) -> Result<(), Base
 
     Err(BaseError::InvalidBody(msg))
 }
+
+// pub fn check_phone_avaliable(pool: &PgPool, phone: &str)-> Result<(), BaseError> {
+//     let userdetail = sqlx::query_as!(
+//      UserDetails,
+//     "SELECT * from users where phone_number = $1"
+//     phone,
+//     );
+//
+//     Ok(())
+//
+// }

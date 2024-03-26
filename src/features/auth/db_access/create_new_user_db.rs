@@ -25,4 +25,4 @@ pub async  fn create_new_user_db(pool: &PgPool, user_data: &CreateUser) -> Resul
     ).fetch_one(pool).await?;
 
      Ok(user)
-}
+} 
