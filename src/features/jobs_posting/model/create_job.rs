@@ -30,7 +30,7 @@ fn validate_worktype(worktype: &str) -> Result<(), ValidationError> {
 
 fn validate_jobtype(jobtype: &str) -> Result<(), ValidationError> {
     let acceptted_type: [&str; 6] = [
-        "full_time",
+        "on_site",
         "part_time",
         "contract",
         "intern",
