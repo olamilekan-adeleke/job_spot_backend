@@ -1,0 +1,32 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT \n                COUNT(CASE WHEN job_type = 'on_site' THEN 1 END) AS on_site_count,\n                COUNT(CASE WHEN job_type = 'remote' THEN 1 END) AS remote_count,\n                COUNT(CASE WHEN job_type = 'hybrid' THEN 1 END) AS hybrid_count\n            FROM job_postings\n\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "on_site_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "remote_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "hybrid_count",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "30faafb5bf1ff13df486dc6d9d72ede87dcdf82ec49e77ae20a9d8c3f849fe05"
+}

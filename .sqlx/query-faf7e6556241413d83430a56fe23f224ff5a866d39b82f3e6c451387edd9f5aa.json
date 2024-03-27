@@ -1,0 +1,100 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT * FROM companies ORDER BY company_name LIMIT $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "company_image_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "company_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "category",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "location",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "year_created",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "social_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "website_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "about",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "industry",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "employee_size",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 11,
+        "name": "heads_office_address",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 12,
+        "name": "specialization",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 13,
+        "name": "company_other_images",
+        "type_info": "TextArray"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "faf7e6556241413d83430a56fe23f224ff5a866d39b82f3e6c451387edd9f5aa"
+}
